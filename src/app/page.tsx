@@ -33,7 +33,33 @@ export default function Home() {
 	return (
 		<main className="p-6">
 			<h1 className="text-2xl font-bold mb-4">Products</h1>
-			<pre className="text-sm">{JSON.stringify(products, null, 2)}</pre>
+
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+				{products.map((product) => (
+					<div key={product.id} className="border p-4 rounded">
+						<img
+							src={product.image.url}
+							alt={product.image.alt || product.title}
+							className="mb-2"
+						/>
+
+						<h2 className="font-semibold">{product.title}</h2>
+
+						{product.discountedPrice ? (
+							<p>
+								Price: ${product.discountedPrice}{" "}
+								<span className="line-through text-gray-500">
+									${product.price}
+								</span>
+							</p>
+						) : (
+							<p>Price: ${product.price}</p>
+						)}
+
+						<p>Rating: {product.rating}</p>
+					</div>
+				))}
+			</div>
 		</main>
 	);
 }
