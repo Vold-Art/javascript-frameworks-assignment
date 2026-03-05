@@ -1,4 +1,5 @@
 import type { Product } from "@/types/product";
+import Link from "next/link";
 
 interface ProductCardProps {
 	product: Product;
@@ -6,25 +7,27 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
 	return (
-		<div className="border p-4 rounded">
-			<img
-				src={product.image.url}
-				alt={product.image.alt || product.title}
-				className="mb-2"
-			/>
+		<Link href={`/products/${product.id}`}>
+			<div className="border p-4 rounded">
+				<img
+					src={product.image.url}
+					alt={product.image.alt || product.title}
+					className="mb-2"
+				/>
 
-			<h2 className="font-semibold">{product.title}</h2>
+				<h2 className="font-semibold">{product.title}</h2>
 
-			{product.discountedPrice ? (
-				<p>
-					Price: ${product.discountedPrice}{" "}
-					<span className="line-through text-gray-500">${product.price}</span>
-				</p>
-			) : (
-				<p>Price: ${product.price}</p>
-			)}
+				{product.discountedPrice ? (
+					<p>
+						Price: ${product.discountedPrice}{" "}
+						<span className="line-through text-gray-500">${product.price}</span>
+					</p>
+				) : (
+					<p>Price: ${product.price}</p>
+				)}
 
-			<p>Rating: {product.rating}</p>
-		</div>
+				<p>Rating: {product.rating}</p>
+			</div>
+		</Link>
 	);
 }
