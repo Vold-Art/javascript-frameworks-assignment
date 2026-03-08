@@ -15,6 +15,8 @@ type CartContextType = {
 	addToCart: (product: Product) => void;
 	removeFromCart: (id: string) => void;
 	clearCart: () => void;
+	increaseQuantity: (id: string) => void;
+	decreaseQuantity: (id: string) => void;
 	cartCount: number;
 	totalPrice: number;
 };
@@ -48,6 +50,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 		setCart([]);
 	}, []);
 
+	function increaseQuantity(id: string) {
+		setCart((currentCart) =>
+			currentCart.map((item) =>
+				item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+			),
+		);
+	}
+
+	function decreaseQuantity(id: string) {
+		setCart((currentCart) =>
+			currentCart
+				.map((item) =>
+					item.id === id ? { ...item, quantity: item.quantity - 1 } : item,
+				)
+				.filter((item) => item.quantity > 0),
+		);
+	}
+
 	const cartCount = useMemo(
 		() => cart.reduce((total, item) => total + item.quantity, 0),
 		[cart],
@@ -70,6 +90,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 				addToCart,
 				removeFromCart,
 				clearCart,
+				increaseQuantity,
+				decreaseQuantity,
 				cartCount,
 				totalPrice,
 			}}

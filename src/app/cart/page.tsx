@@ -5,7 +5,13 @@ import { useCart } from "@/context/CartContext";
 import toast from "react-hot-toast";
 
 export default function CartPage() {
-	const { cart, removeFromCart, totalPrice } = useCart();
+	const {
+		cart,
+		removeFromCart,
+		increaseQuantity,
+		decreaseQuantity,
+		totalPrice,
+	} = useCart();
 
 	return (
 		<main className="p-6">
@@ -19,7 +25,23 @@ export default function CartPage() {
 						{cart.map((item) => (
 							<li key={item.id} className="border p-4 rounded">
 								<h2 className="font-semibold">{item.title}</h2>
-								<p>Quantity: {item.quantity}</p>
+								<div className="flex items-center gap-3 mt-2">
+									<button
+										onClick={() => decreaseQuantity(item.id)}
+										className="border px-2 py-1 rounded"
+									>
+										-
+									</button>
+
+									<span>Quantity: {item.quantity}</span>
+
+									<button
+										onClick={() => increaseQuantity(item.id)}
+										className="border px-2 py-1 rounded"
+									>
+										+
+									</button>
+								</div>
 								<p>Price: ${item.discountedPrice ?? item.price}</p>
 
 								<button
