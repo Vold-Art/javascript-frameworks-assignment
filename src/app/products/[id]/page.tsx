@@ -1,9 +1,17 @@
-import { getProductById } from "@/services/api";
+import { getProductById, getProducts } from "@/services/api";
 import AddToCartButton from "@/components/AddToCartButton";
 
 type PageProps = {
 	params: Promise<{ id: string }>;
 };
+
+export async function generateStaticParams() {
+	const products = await getProducts();
+
+	return products.map((product) => ({
+		id: product.id,
+	}));
+}
 
 export default async function ProductPage({ params }: PageProps) {
 	const { id } = await params;

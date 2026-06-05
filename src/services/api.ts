@@ -9,7 +9,8 @@ function unwrap<T>(json: any): T {
 }
 
 export async function getProducts(): Promise<Product[]> {
-	const response = await fetch(BASE_URL, { cache: "no-store" });
+	const response = await fetch(BASE_URL, { cache: "force-cache" });
+
 	if (!response.ok) {
 		throw new Error(`Failed to fetch products (${response.status})`);
 	}
@@ -21,7 +22,8 @@ export async function getProducts(): Promise<Product[]> {
 export async function getProductById(id: string): Promise<Product> {
 	const url = `${BASE_URL}/${id}`;
 
-	const response = await fetch(url, { cache: "no-store" });
+	const response = await fetch(url, { cache: "force-cache" });
+
 	if (!response.ok) {
 		throw new Error(`Failed to fetch product (${response.status}) from ${url}`);
 	}
